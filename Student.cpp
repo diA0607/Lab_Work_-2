@@ -10,9 +10,11 @@ Student::Student(const Student& obj) {
 
 }
 
-Student::~Student() {
+Student::~Student() 
+{
 
 }
+
 
 void Student::SetStudent() {
 	cout << "Ââåäèòå ÔÈÎ:" << endl
@@ -33,8 +35,17 @@ int Student::GetGrade() {
 }
 
 
-void Student::Print(ostream& out) {
-	out << this->Value.Name
-		<< " " << this->Value.SurName
-		<< " " << this->Value.LastName << endl;
+//void Student::Print(ostream& out) {
+//	out << this->Value.Name
+//		<< " " << this->Value.SurName
+//		<< " " << this->Value.LastName << endl;
+//}
+
+ostream& operator<< (ostream& out, Student& obj) {
+	
+	out << obj.Value.Name
+		<< " " << obj.Value.SurName
+		<< " " << obj.Value.LastName << endl;
+	
+	return out;
 }

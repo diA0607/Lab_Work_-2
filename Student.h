@@ -17,7 +17,8 @@ public:
 	Student();
 	Student(const Student& obj);
 	~Student();
+	friend ostream& operator<< (ostream& out, Student& obj);
 	void SetStudent();
 	int GetGrade();
-	void Print(ostream& out);
+	/*void Print(ostream& out);*/
 };

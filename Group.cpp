@@ -102,7 +102,11 @@ void Group::Print(ostream& out) {
 }
 
 void Group::PrintStudents() {
-	//Print(Value); //вот здесь, нужно вызвать Print(), который в Student.cpp
+	for (int i = 0; i < this->size; i++)
+	{
+		cout << Value[i];
+	}
+	
 	//cout << Value;
 	
 }

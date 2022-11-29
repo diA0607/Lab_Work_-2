@@ -133,14 +133,14 @@ int main() {
 			cout << un1;
 			break;
 		case '7':
-			if (un1.GetSize() >= 2) {
+			if (un1.GetSize() >= 1) {
 				int group;
 				cout << "Выберите группу:" << endl;
 				for (int i = 0; i < un1.GetSize(); i++)
 					cout << "[" << i + 1 << "]" << endl;
 				cout << ">> ";
 				cin >> group;
-				un1.PrintStudents(group);
+				un1.PrintStudents(group-1);
 				//cout << un1;
 			}
 			//else if (un1.GetSize() == 1)
