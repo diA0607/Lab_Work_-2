@@ -4,7 +4,7 @@ using namespace std;
 
 class Group {
 private:
-	Student** Value;
+	Student* Value;
 	int size;
 	int number;
 	float av_grade;

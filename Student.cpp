@@ -7,6 +7,7 @@ Student::Student() {
 Student::Student(const Student& obj) {
 	Value = obj.Value;
 	grade = obj.grade;
+
 }
 
 Student::~Student() {
@@ -30,6 +31,7 @@ void Student::SetStudent() {
 int Student::GetGrade() {
 	return grade;
 }
+
 
 void Student::Print(ostream& out) {
 	out << this->Value.Name

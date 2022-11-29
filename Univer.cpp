@@ -3,6 +3,8 @@
 Univer::Univer() {
 	Value = nullptr;
 	size = 0;
+	//count = 1;
+
 }
 
 Univer::~Univer() {
@@ -14,17 +16,27 @@ int Univer::GetSize() {
 }
 
 void Univer::Add() {
-	Group** temp = new Group*[size + 1];
-	int i = 0;
-	while (i < size) {
+	//size = GetSize();
+	Group* temp = new Group  [size + 1];
+	//int i = 0;
+	
+	for (int i = 0; i < size; i++)
+	{
 		temp[i] = Value[i];
-		i++;
 	}
+	/*if (size == 0)
+	{
+		temp[0].SetGroup();
+	}*/
+	
 	temp[size].SetGroup();
-	size++;
+	
 	if (Value)
 		delete[] Value;
 	Value = temp;
+	size++;
+	
+
 }
 
 void Univer::AddStudent(int group) {
@@ -42,7 +54,7 @@ void Univer::Del() {
 		size--;
 	}
 	else {
-		Group** temp = new Group*[size - 1];
+		Group* temp = new Group[size - 1];
 		int j = 0;
 		for (int i = 0; i < size; i++)
 			temp[j++] = Value[i];
@@ -62,6 +74,8 @@ void Univer::Calculate(int group) {
 
 void Univer::PrintStudents(int group) {
 	Value[group].PrintStudents();
+	//cout<<
+	//Value[group].Print(out);
 }
 
 ostream& operator<< (ostream& out, Univer& obj) {

@@ -4,8 +4,9 @@ using namespace std;
 
 class Univer {
 private:
-	Group** Value;
+	Group* Value;
 	int size;
+	int count;
 public:
 	Univer();
 	~Univer();

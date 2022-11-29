@@ -1,9 +1,8 @@
 #include "Group.h"
 
 Group::Group() {
-	this->Value = nullptr;
-	//size = 0;
-	this->size = 0;
+	Value = nullptr;
+	size = 0;
 	number = 0;
 	av_grade = 0;
 	subject = "";
@@ -22,8 +21,9 @@ Group::~Group() {
 }
 
 void Group::SetGroup() {
+	setlocale(LC_ALL, "Rus");
 	cout << "Введите номер группы:";
-	cin >> number;
+	cin >> this->number;
 	cout << "Введите изучаемый предмет:";
 	cin.ignore(256, '\n');
 	getline(cin, this->subject);
@@ -34,23 +34,20 @@ int Group::GetSize() {
 }
 
 void Group::Add() {
-	Student** temp;
 	
-		temp = new Student*[size + 1];
-		int i = 0;
-		while (i < size) {
-			temp[i] = Value[i];
-			i++;
-		}
-		temp[size].SetStudent();
-		size++;
+	Student* temp = new Student[size + 1];
+	int i = 0;
+	while (i < size) {
+		temp[i] = Value[i];
+		i++;
+	}
 	
+	temp[size].SetStudent();
+	size++;
 	if (Value)
 		delete[] Value;
 	Value = temp;
 }
-	
-
 
 void Group::Del() {
 	if (size == 0) {
@@ -63,7 +60,7 @@ void Group::Del() {
 		size--;
 	}
 	else {
-		Student** temp = new Student*[size - 1];
+		Student* temp = new Student[size - 1];
 		int j = 0;
 		for (int i = 0; i < size; i++)
 			temp[j++] = Value[i];
@@ -86,6 +83,7 @@ ostream& operator<< (ostream& out, Group& obj) {
 	return out;
 }
 
+
 Group& Group::operator= (Group& obj) {
 	Value = obj.Value;
 	size = obj.size;
@@ -96,6 +94,7 @@ Group& Group::operator= (Group& obj) {
 }
 
 void Group::Print(ostream& out) {
+	//setlocale(LC_ALL, "Rus");
 	out << endl << "Номер группы: " << number << endl
 		<< "Изучаемый предмет: " << subject << endl
 		<< "Размер группы: " << size << endl
@@ -103,5 +102,7 @@ void Group::Print(ostream& out) {
 }
 
 void Group::PrintStudents() {
-	cout << Value;
+	//Print(Value); //вот здесь, нужно вызвать Print(), который в Student.cpp
+	//cout << Value;
+	
 }
