@@ -18,6 +18,9 @@ public:
 	void Add();
 	void Del();
 	void Calculate();
+	void Red();
+	void Ball();
+	void Expulsion();
 	friend ostream& operator<< (ostream& out, Group& obj);
 	Group& operator= (Group& obj);
 	void Print(ostream& out);

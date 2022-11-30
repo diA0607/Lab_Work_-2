@@ -49,11 +49,35 @@ void Group::Add() {
 	Value = temp;
 }
 
+
 void Group::Del() {
-	if (size == 0) {
-		cout << "√руппа пуста!" << endl;
-		return;
+	if (size == 0)
+		throw string("Unable to delete student. Group is empty");
+
+	int number; // номер студента
+
+	cout << "¬ведите номер студента дл€ удалени€: ";
+	cin >> number; // считываем номер
+
+	// если номер не входит в нужный интервал, бросаем исключение
+	if (number < 1 || number > size)
+		throw string("Ќомер студента должен быть от 1 до" + to_string(size));
+
+	// сдвигаем студентов
+	for (int i = number; i < size; i++) {
+		Value[i - 1] = Value[i];
 	}
+	Student* temp = new Student[size];
+	int j = 0;
+	for (int i = 0; i < size; i++)
+		temp[j++] = Value[i];
+	delete[] Value;
+	Value = temp;
+	size--; // уменьшаем размер
+	cout << "—тудент удален" << endl;
+
+
+	/*int number;
 	if (size == 1) {
 		delete[] Value;
 		Value = nullptr;
@@ -67,15 +91,60 @@ void Group::Del() {
 		delete[] Value;
 		Value = temp;
 		size--;
-	}
+	}*/
 }
 
 void Group::Calculate() {
 	for (int i = 0; i < size; i++)
+	{
 		av_grade += Value[i].GetGrade();
+	}
+		
 	av_grade /= size;
 }
+void Group::Ball() {
+	int count = 0; // число студентов
 
+	// провер€ем каждого студенты
+	cout<<number<<endl;
+	for (int i = 0; i < GetSize(); i++) {
+		// если балл выше 4, выводим его
+		
+			if (Value[i].GetGrade() >= 4)
+			{
+				// если это был 1 студент, то выводим инфу
+				cout << Value[i] << endl;
+				count++;
+			}
+		
+		
+	}
+
+	// если не было ни одного студенты, то выводим это
+	if (count == 0)
+		cout << endl << "Ќет студентов со средним баллом выше 4" << endl;
+}
+void Group::Expulsion()//на отчисление
+{
+	int count = 0; // число студентов
+
+	// провер€ем каждого студенты
+	cout << number << endl;
+	for (int i = 0; i < GetSize(); i++) {
+		// если балл выше 4, выводим его
+
+		if (Value[i].GetGrade() < 3)
+		{
+			// если это был 1 студент, то выводим инфу
+			cout << Value[i] << endl;
+			count++;
+		}
+	}
+
+	// если не было ни одного студенты, то выводим это
+	if (count == 0)
+		cout << endl << "Ќет студентов на отчисление" << endl;
+}
 ostream& operator<< (ostream& out, Group& obj) {
 	for (int i = 0; i < obj.size; i++) {
 		obj.Value[i].Print(out);
@@ -109,4 +178,9 @@ void Group::PrintStudents() {
 	
 	//cout << Value;
 	
+}
+void Red() {
+
+	//cout << Value[];
+
 }

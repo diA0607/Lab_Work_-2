@@ -12,13 +12,14 @@ typedef struct FIO {
 class Student {
 private:
 	FIO Value;
-	int grade;
+	int grade[5];
 public:
 	Student();
 	Student(const Student& obj);
 	~Student();
 	friend ostream& operator<< (ostream& out, Student& obj);
 	void SetStudent();
-	int GetGrade();
-	/*void Print(ostream& out);*/
+	float GetGrade();
+	void Reduct();
+	void Print(ostream& out);
 };

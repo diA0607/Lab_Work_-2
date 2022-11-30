@@ -24,35 +24,58 @@ GROUP определяет такие параметры как :
 которая считывает текст из файла и выводит его на экран,
 меняя местами каждые два соседних слова.*/
 
-
 #include "Univer.h"
-
 #include <iostream>
 #include <fstream>
 #include <Windows.h>
 
-
 using namespace std;
-int Potok() {
-	string s1;
-	string s[30];
-	ifstream ifs("text.txt");
-	int count = 0;
-	while (getline(ifs, s1, ' ')) {
-		s[count] = s1;
-		count++;
+// проверка на разделитель
+bool isDelimeter(char c) {
+	return c == ' ' || c == '.' || c == ';' || c == '\n' || c == ':';
+}
+
+// получение строки
+string getChangeString(ifstream& in) {
+	string res = "";
+
+	char c; // символ для считывания
+
+	if (!in.eof())
+		in.get(c); // считываем 1-ый символ
+
+	// пока не конец файла
+	while (!in.eof()) {
+		string word1 = "", word2 = "", delimeters = "";
+
+		// считываем разделители до 1 слова
+		while (!in.eof() && isDelimeter(c)) {
+			res += c;
+			c = in.get();
+		}
+
+		// считывание 1-ого слова
+		while (!in.eof() && !isDelimeter(c)) {
+			word1 += c;
+			c = in.get();
+		}
+
+		// считывание разделителей между 1 и 2 словом
+		while (!in.eof() && isDelimeter(c)) {
+			delimeters += c;
+			c = in.get();
+		}
+
+		// считывание 2 слова
+		while (!in.eof() && !isDelimeter(c)) {
+			word2 += c;
+			c = in.get();
+		}
+
+		res += word2 + delimeters + word1; // добавляем в строку
 	}
-	ifs.close();
-	string temp;
-	for (int i = 0; i < 30; i += 2) {
-		temp = s[i];
-		s[i] = s[i + 1];
-		s[i + 1] = temp;
-	}
-	for (int i = 0; i < 30; i++) {
-		cout << s[i] << " ";
-	}
-	return 0;
+
+	return res; // возвращаем строку
 }
 
 int main() {
@@ -68,9 +91,11 @@ int main() {
 			<< "[2] Добавить студента." << endl
 			<< "[3] Удалить группу." << endl
 			<< "[4] Удалить студента." << endl
-			<< "[5] Вычислить средний балл (при наличии студентов в группах)" << endl
+			<< "[5] Вывести студентов 4.0" << endl
 			<< "[6] Показать группы." << endl
 			<< "[7] Показать студентов." << endl
+			<< "[8] Редактирование." << endl
+			<< "[9] Показать студентов на отчисление." << endl
 			<< "[X] Поменять слова текста из файла местами (2-е задание)." << endl
 			<< "[0] Выход." << endl
 			<< ">> ";
@@ -97,7 +122,12 @@ int main() {
 				cout << "Группы отсутствуют!" << endl;
 			break;
 		case '3':
-			un1.Del();
+			int group;
+			for (int i = 0; i < un1.GetSize(); i++)
+				cout << "[" << i + 1 << "]" << endl;
+			cout << ">> ";
+			cin >> group;
+				un1.Del(group - 1);
 			break;
 		case '4':
 			if (un1.GetSize() >= 2) {
@@ -107,30 +137,28 @@ int main() {
 					cout << "[" << i + 1 << "]" << endl;
 				cout << ">> ";
 				cin >> group;
-				un1.DelStudent(group);
+				un1.DelStudent(group-1);
 			}
 			else if (un1.GetSize() == 1)
-				un1.DelStudent(1);
+				un1.DelStudent(0);
 			else
 				cout << "Группы отсутствуют!" << endl;
 			break;
 		case '5':
-			if (un1.GetSize() >= 2) {
-				int group;
-				cout << "Выберите группу:" << endl;
-				for (int i = 0; i < un1.GetSize(); i++)
-					cout << "[" << i + 1 << "]" << endl;
-				cout << ">> ";
-				cin >> group;
-				un1.Calculate(group);
+			for (int i = 0; i < un1.GetSize(); i++)
+			{
+
+				un1.SRBall(i);
 			}
-			else if (un1.GetSize() == 1)
-				un1.Calculate(0);
-			else
-				cout << "Группы отсутствуют!" << endl;
+			
 			break;
 		case '6':
+			for (int i = 0; i < un1.GetSize(); i++)
+			{
+				un1.Calculate(i);
+			}
 			cout << un1;
+			
 			break;
 		case '7':
 			if (un1.GetSize() >= 1) {
@@ -141,7 +169,7 @@ int main() {
 				cout << ">> ";
 				cin >> group;
 				un1.PrintStudents(group-1);
-				//cout << un1;
+				
 			}
 			//else if (un1.GetSize() == 1)
 			//	//cout << un1;
@@ -149,8 +177,45 @@ int main() {
 			else
 				cout << "Студенты отсутствуют!" << endl;
 			break;
-		case 'x':
-			Potok();
+			case'8':
+				if (un1.GetSize() >= 1) {
+					int group;
+					cout << un1;
+					cout << "Выберите редактируемую группу:" << endl;
+					for (int i = 0; i < un1.GetSize(); i++)
+						cout << "[" << i + 1 << "]" << endl;
+					cout << ">> ";
+					cin >> group;
+					//un1.PrintStudents(group - 1);
+
+					un1.Reduct(group-1);
+
+					//cout << un1;
+				}
+				break;
+			case '9':
+				for (int i = 0; i < un1.GetSize(); i++)
+				{
+
+					un1.Ball_2(i);
+				}
+
+				break;
+			
+		case 'X':
+			try {
+				ifstream ifs("text.txt");
+				if (!ifs) {
+					throw "Incorrest file.";
+				}
+				string res = getChangeString(ifs); // получаем итоговую строку
+				cout << "Result: " << res << endl; // выводим строку
+				ifs.close();
+			}
+			// ловим исключения
+			catch (const char* s) {
+				cout << s << endl; // выводим сообщения об ошибке
+			}
 			cout << endl;
 			break;
 		}

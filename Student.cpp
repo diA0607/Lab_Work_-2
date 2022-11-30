@@ -1,12 +1,14 @@
 #include "Student.h"
 
 Student::Student() {
-	grade = 0;
+	for(int i=0;i<5;i++)
+		grade[i] = 0;
 }
 
 Student::Student(const Student& obj) {
 	Value = obj.Value;
-	grade = obj.grade;
+	for (int i = 0; i < 5; i++)
+		grade[i] = obj.grade[i];
 
 }
 
@@ -15,7 +17,12 @@ Student::~Student()
 
 }
 
+void Student::Reduct()
+{
+	cout << " Выберите группу:";
 
+
+}
 void Student::SetStudent() {
 	cout << "Введите ФИО:" << endl
 		<< "Имя: ";
@@ -25,21 +32,28 @@ void Student::SetStudent() {
 	getline(cin, this->Value.SurName);
 	cout << "Отчесво: ";
 	getline(cin, this->Value.LastName);
-	cout << "Введите оценку: " << endl;
-	cin >> this->grade;
+	cout << "Введите оценки: " << endl;
+	for(int i=0;i<5;i++)
+		cin >> this->grade[i];
 	cout << "Студент добавлен!" << endl;
 }
 
-int Student::GetGrade() {
-	return grade;
+float Student::GetGrade() {
+	float sum = 0;
+	for (int i = 0; i < 5; i++)
+	{
+		sum += grade[i];
+	}
+	return (float)sum/5.0;
 }
 
 
-//void Student::Print(ostream& out) {
-//	out << this->Value.Name
-//		<< " " << this->Value.SurName
-//		<< " " << this->Value.LastName << endl;
-//}
+void Student::Print(ostream& out) {
+	out << this->Value.Name
+		<< " " << this->Value.SurName
+		<< " " << this->Value.LastName << endl;
+
+}
 
 ostream& operator<< (ostream& out, Student& obj) {
 	
