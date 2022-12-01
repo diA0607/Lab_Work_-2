@@ -16,9 +16,7 @@ Group::Group(const Group& obj) {
 	subject = obj.subject;
 }
 
-Group::~Group() {
-
-}
+Group::~Group() {}
 
 void Group::SetGroup() {
 	setlocale(LC_ALL, "Rus");
@@ -34,15 +32,14 @@ int Group::GetSize() {
 }
 
 void Group::Add() {
-	
 	Student* temp = new Student[size + 1];
 	int i = 0;
 	while (i < size) {
 		temp[i] = Value[i];
 		i++;
 	}
-	
-	temp[size].SetStudent();
+	cin >> temp[size]; //добавление студентов
+	//temp[size].SetStudent();
 	size++;
 	if (Value)
 		delete[] Value;
@@ -75,36 +72,27 @@ void Group::Del() {
 	Value = temp;
 	size--; // уменьшаем размер
 	cout << "Студент удален" << endl;
+}
 
-
-	/*int number;
-	if (size == 1) {
-		delete[] Value;
-		Value = nullptr;
-		size--;
-	}
-	else {
-		Student* temp = new Student[size - 1];
-		int j = 0;
+//void Group::Calculate() {
+//	for (int i = 0; i < size; i++)
+//	{
+//		av_grade += Value[i].GetGrade();
+//	}
+//		
+//	av_grade /= size;
+//}
+float Group::Calculate() {
+		av_grade = 0;
 		for (int i = 0; i < size; i++)
-			temp[j++] = Value[i];
-		delete[] Value;
-		Value = temp;
-		size--;
-	}*/
-}
-
-void Group::Calculate() {
-	for (int i = 0; i < size; i++)
-	{
-		av_grade += Value[i].GetGrade();
+		{
+			av_grade += Value[i].GetGrade();
+		}
+			
+		return av_grade /= size;
 	}
-		
-	av_grade /= size;
-}
 void Group::Ball() {
 	int count = 0; // число студентов
-
 	// проверяем каждого студенты
 	cout<<number<<endl;
 	for (int i = 0; i < GetSize(); i++) {
@@ -116,10 +104,7 @@ void Group::Ball() {
 				cout << Value[i] << endl;
 				count++;
 			}
-		
-		
 	}
-
 	// если не было ни одного студенты, то выводим это
 	if (count == 0)
 		cout << endl << "Нет студентов со средним баллом выше 4" << endl;
@@ -163,7 +148,6 @@ Group& Group::operator= (Group& obj) {
 }
 
 void Group::Print(ostream& out) {
-	//setlocale(LC_ALL, "Rus");
 	out << endl << "Номер группы: " << number << endl
 		<< "Изучаемый предмет: " << subject << endl
 		<< "Размер группы: " << size << endl
@@ -173,14 +157,12 @@ void Group::Print(ostream& out) {
 void Group::PrintStudents() {
 	for (int i = 0; i < this->size; i++)
 	{
-		cout << Value[i];
+		cout <<i+1<<". "<< Value[i];
 	}
 	
-	//cout << Value;
-	
 }
-void Red() {
-
-	//cout << Value[];
-
+void  Group::Red_student(int x) {
+	cout << Value[x];
+	cin >> Value[x];
+	
 }

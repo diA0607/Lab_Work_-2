@@ -17,9 +17,9 @@ public:
 	Student();
 	Student(const Student& obj);
 	~Student();
-	friend ostream& operator<< (ostream& out, Student& obj);
-	void SetStudent();
+	friend ostream& operator<< (ostream& out, Student& obj);//оператор ввода в поток
+	friend istream& operator>>(istream& in, Student& obj); // оператор считывания из потока
+	/*void SetStudent();*/
 	float GetGrade();
-	void Reduct();
 	void Print(ostream& out);
 };

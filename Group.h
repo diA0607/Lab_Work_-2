@@ -17,10 +17,10 @@ public:
 	int GetSize();
 	void Add();
 	void Del();
-	void Calculate();
-	void Red();
+	float Calculate();
 	void Ball();
 	void Expulsion();
+	void Red_student(int x);
 	friend ostream& operator<< (ostream& out, Group& obj);
 	Group& operator= (Group& obj);
 	void Print(ostream& out);

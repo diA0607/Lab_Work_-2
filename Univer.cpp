@@ -3,23 +3,16 @@
 Univer::Univer() {
 	Value = nullptr;
 	size = 0;
-	//count = 1;
-
 }
 
-Univer::~Univer() {
-
-}
+Univer::~Univer() {}
 
 int Univer::GetSize() {
 	return size;
 }
 
 void Univer::Add() {
-	//size = GetSize();
 	Group* temp = new Group  [size + 1];
-	//int i = 0;
-	
 	for (int i = 0; i < size; i++)
 	{
 		temp[i] = Value[i];
@@ -35,8 +28,6 @@ void Univer::Add() {
 		delete[] Value;
 	Value = temp;
 	size++;
-	
-
 }
 
 void Univer::AddStudent(int group) {
@@ -66,41 +57,64 @@ void Univer::Del(int group) {
 		size--;
 	}
 }
-void Univer::Reduct(int group)
+void Univer::Reduct(int group, int ch)
 {
-	Group* temp = new Group[size];
-	
-	for (int i = 0; i < size; i++)
+	if (ch == 1)
 	{
-		temp[i] = Value[i];
+		Group* temp = new Group[size];
+
+		for (int i = 0; i < size; i++)
+		{
+			temp[i] = Value[i];
+		}
+
+		temp[group].SetGroup();
+
+		if (Value)
+			delete[] Value;
+		Value = temp;
 	}
+	else if (ch == 2)
+	{
+		Value[group].PrintStudents();
+		Group* temp = new Group[size];
 
-	temp[group].SetGroup();
+		for (int i = 0; i < size; i++)
+		{
+			temp[i] = Value[i];
+		}
+		cout << "¬ведите номер студента дл€ изменени€:" << endl;
+		int x;
+		cin >> x;
+		x -= 1;
+		temp[group].Red_student(x);
+		//temp[group].SetGroup();
 
-	if (Value)
-		delete[] Value;
-	Value = temp;
-	//Value[group].Red();
+		if (Value)
+			delete[] Value;
+		Value = temp;
+	}
+	
 }
 void Univer::DelStudent(int group) {
 	Value[group].Del();
 }
 
-void Univer::Calculate(int group) {
-	Value[group].Calculate();
+void Univer::Calculate(int group) {//средний балл группы
+	
+	Value[group].Calculate()/GetSize();
+	
 }
 
 void Univer::PrintStudents(int group) {
 	Value[group].PrintStudents();
-	//cout<<
-	//Value[group].Print(out);
 }
-void Univer::SRBall(int group) {
+void Univer::SRBall(int group) {//средний балл студента
 	Value[group].Ball();
 }
-void Univer::Ball_2(int group)
+void Univer::Ball_2(int group)//отчисление
 {
-	Value[group].Expulsion();//отчисление
+	Value[group].Expulsion();
 }
 ostream& operator<< (ostream& out, Univer& obj) {
 	for (int i = 0; i < obj.size; i++) {

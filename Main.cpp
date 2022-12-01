@@ -25,6 +25,7 @@ GROUP определяет такие параметры как :
 меняя местами каждые два соседних слова.*/
 
 #include "Univer.h"
+#include "Student.h"
 #include <iostream>
 #include <fstream>
 #include <Windows.h>
@@ -79,105 +80,86 @@ string getChangeString(ifstream& in) {
 }
 
 int main() {
-	
 	SetConsoleCP(1251);// установка кодовой страницы win-cp 1251 в поток ввода
 	SetConsoleOutputCP(1251); // установка кодовой страницы win-cp 1251 в поток вывода
 	setlocale(LC_ALL, "Rus");
 	Univer un1;
-
+	Student un2;
 	char menu;
+	int choose1;
 	do {
-		cout << "[1] Добавить группу." << endl
-			<< "[2] Добавить студента." << endl
-			<< "[3] Удалить группу." << endl
-			<< "[4] Удалить студента." << endl
-			<< "[5] Вывести студентов 4.0" << endl
-			<< "[6] Показать группы." << endl
-			<< "[7] Показать студентов." << endl
-			<< "[8] Редактирование." << endl
-			<< "[9] Показать студентов на отчисление." << endl
-			<< "[X] Поменять слова текста из файла местами (2-е задание)." << endl
-			<< "[0] Выход." << endl
+		cout <<"1. Добавить элемент." << endl
+			<< "2. Удалить элемент." << endl
+			<< "3. Редактировать элемент." << endl
+			<< "4. Показать элемент." << endl
+			<< "5. Вывести студентов с баллом выше 4.0" << endl
+			<< "6. Показать студентов на отчисление." << endl
+			<< "X. Поменять слова текста из файла местами (2-е задание)." << endl
+			<< "0. Выход." << endl
 			<< ">> ";
 		cin >> menu;
 		switch (menu) {
 		case '0':
 			break;
 		case '1':
-			un1.Add();
+			cout << "Выберите элемент, который хотите добавить:\n1.Добавить группу\n2.Добавить студента\nВыш выбор: ";
+			cin>> choose1;
+			if (choose1 == 1)
+			{
+				un1.Add();
+			}
+			else if (choose1 == 2)
+			{
+				if (un1.GetSize() >= 2) {
+					int group;
+					cout << "Выберите группу:" << endl;
+					for (int i = 0; i < un1.GetSize(); i++)
+						cout << "[" << i + 1 << "]" << endl;
+					cout << ">> ";
+					cin >> group;
+					un1.AddStudent(group - 1);
+				}
+				else if (un1.GetSize() == 1)
+					un1.AddStudent(0);
+				else
+					cout << "Группы отсутствуют!" << endl;
+			}
 			break;
 		case '2':
-			if (un1.GetSize() >= 2) {
+			cout << "Выберите элемент, который хотите удалить:\n1.Удалить группу\n2.Удалить студента\nВыш выбор: ";
+			cin >> choose1;
+			if (choose1 == 1)
+			{
 				int group;
-				cout << "Выберите группу:" << endl;
 				for (int i = 0; i < un1.GetSize(); i++)
 					cout << "[" << i + 1 << "]" << endl;
 				cout << ">> ";
 				cin >> group;
-				un1.AddStudent(group-1);
+				un1.Del(group - 1);
+				break;
 			}
-			else if (un1.GetSize() == 1)
-				un1.AddStudent(0);
-			else
-				cout << "Группы отсутствуют!" << endl;
+			else if (choose1 == 2)
+			{
+				if (un1.GetSize() >= 2) {
+					int group;
+					cout << "Выберите группу:" << endl;
+					for (int i = 0; i < un1.GetSize(); i++)
+						cout << "[" << i + 1 << "]" << endl;
+					cout << ">> ";
+					cin >> group;
+					un1.DelStudent(group - 1);
+				}
+				else if (un1.GetSize() == 1)
+					un1.DelStudent(0);
+				else
+					cout << "Группы отсутствуют!" << endl;
+			}
 			break;
 		case '3':
-			int group;
-			for (int i = 0; i < un1.GetSize(); i++)
-				cout << "[" << i + 1 << "]" << endl;
-			cout << ">> ";
-			cin >> group;
-				un1.Del(group - 1);
-			break;
-		case '4':
-			if (un1.GetSize() >= 2) {
-				int group;
-				cout << "Выберите группу:" << endl;
-				for (int i = 0; i < un1.GetSize(); i++)
-					cout << "[" << i + 1 << "]" << endl;
-				cout << ">> ";
-				cin >> group;
-				un1.DelStudent(group-1);
-			}
-			else if (un1.GetSize() == 1)
-				un1.DelStudent(0);
-			else
-				cout << "Группы отсутствуют!" << endl;
-			break;
-		case '5':
-			for (int i = 0; i < un1.GetSize(); i++)
+			cout << "Выберите элемент, который хотите редактировать:\n1.Редактировать группу\n2.Редактировать студента\nВыш выбор: ";
+			cin >> choose1;
+			if (choose1 == 1)
 			{
-
-				un1.SRBall(i);
-			}
-			
-			break;
-		case '6':
-			for (int i = 0; i < un1.GetSize(); i++)
-			{
-				un1.Calculate(i);
-			}
-			cout << un1;
-			
-			break;
-		case '7':
-			if (un1.GetSize() >= 1) {
-				int group;
-				cout << "Выберите группу:" << endl;
-				for (int i = 0; i < un1.GetSize(); i++)
-					cout << "[" << i + 1 << "]" << endl;
-				cout << ">> ";
-				cin >> group;
-				un1.PrintStudents(group-1);
-				
-			}
-			//else if (un1.GetSize() == 1)
-			//	//cout << un1;
-			//	un1.PrintStudents(0);
-			else
-				cout << "Студенты отсутствуют!" << endl;
-			break;
-			case'8':
 				if (un1.GetSize() >= 1) {
 					int group;
 					cout << un1;
@@ -186,22 +168,61 @@ int main() {
 						cout << "[" << i + 1 << "]" << endl;
 					cout << ">> ";
 					cin >> group;
-					//un1.PrintStudents(group - 1);
-
-					un1.Reduct(group-1);
-
-					//cout << un1;
+					un1.Reduct(group - 1, 1);
 				}
-				break;
-			case '9':
+			}
+			else if (choose1 == 2)
+			{
+				int group;
+				cout << un1;
+				cout << "Выберите группу в которой хотите отредактировать студентов:" << endl;
+				for (int i = 0; i < un1.GetSize(); i++)
+					cout << "[" << i + 1 << "]" << endl;
+				cout << ">> ";
+				cin >> group;
+				un1.Reduct(group - 1, 2);
+			}
+			break;
+		case '4':
+			cout << "Выберите элемент, который хотите показать:\n1.Показать группу\n2.Показать студента\nВыш выбор: ";
+			cin >> choose1;
+			if (choose1 == 1)
+			{
 				for (int i = 0; i < un1.GetSize(); i++)
 				{
-
-					un1.Ball_2(i);
+					un1.Calculate(i);
 				}
+				cout << un1;
+			}
+			else if (choose1 == 1)
+			{
+				if (un1.GetSize() >= 1) {
+					int group;
+					cout << "Выберите группу:" << endl;
+					for (int i = 0; i < un1.GetSize(); i++)
+						cout << "[" << i + 1 << "]" << endl;
+					cout << ">> ";
+					cin >> group;
+					un1.PrintStudents(group - 1);
 
-				break;
-			
+				}
+				else
+					cout << "Студенты отсутствуют!" << endl;
+				
+			}
+			break;
+		case '5':
+			for (int i = 0; i < un1.GetSize(); i++)
+			{
+				un1.SRBall(i);
+			}
+			break;
+		case '6':
+			for (int i = 0; i < un1.GetSize(); i++)
+			{
+				un1.Ball_2(i);
+			}
+			break;
 		case 'X':
 			try {
 				ifstream ifs("text.txt");

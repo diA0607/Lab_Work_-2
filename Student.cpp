@@ -12,30 +12,57 @@ Student::Student(const Student& obj) {
 
 }
 
-Student::~Student() 
-{
+Student::~Student() {}
 
-}
+//void Student::SetStudent() {
+//	cout << "Введите ФИО:" << endl
+//		<< "Имя: ";
+//	cin.ignore(256, '\n');
+//	getline(cin, this->Value.Name);
+//	cout << "Фамилия: ";
+//	getline(cin, this->Value.SurName);
+//	cout << "Отчество: ";
+//	getline(cin, this->Value.LastName);
+//	cout << "Введите оценки: " << endl;
+//	for (int i = 0; i < 5; i++)
+//	{
+//		cin >> this->grade[i];
+//		while (grade[i] < 2 || grade[i] > 5 )
+//		{
+//			cout << "Неверная оценка, введите заново: " << endl;
+//			cin >> this->grade[i];
+//		}
+//	}
+//		
+//		
+//	cout << "Студент добавлен!" << endl;
+//}
+istream& operator>>(istream& in, Student& obj) {
+	try {
+		cout << "Введите ФИО:" << endl << "Имя: ";
+		cin.ignore(256, '\n');
+		getline(in, obj.Value.Name); // считыванием ФИО
+		cout << "Фамилия: ";
+		getline(in, obj.Value.SurName);
+		cout << "Отчество: ";
+		getline(in, obj.Value.LastName);
 
-void Student::Reduct()
-{
-	cout << " Выберите группу:";
+		cout << "Введите оценки: " << endl;
+		bool crash = false;
 
+		// считываем оценки
+		for (int i = 0; i < 5; i++) {
+			in >> obj.grade[i];
 
-}
-void Student::SetStudent() {
-	cout << "Введите ФИО:" << endl
-		<< "Имя: ";
-	cin.ignore(256, '\n');
-	getline(cin, this->Value.Name);
-	cout << "Фамилия: ";
-	getline(cin, this->Value.SurName);
-	cout << "Отчесво: ";
-	getline(cin, this->Value.LastName);
-	cout << "Введите оценки: " << endl;
-	for(int i=0;i<5;i++)
-		cin >> this->grade[i];
-	cout << "Студент добавлен!" << endl;
+			if (obj.grade[i] < 2 || obj.grade[i] > 5)
+				throw 1;
+		}
+	}
+	catch (int num)
+	{
+		cout << "Неверная оценка" << endl;
+	}
+		
 }
 
 float Student::GetGrade() {
@@ -44,9 +71,9 @@ float Student::GetGrade() {
 	{
 		sum += grade[i];
 	}
-	return (float)sum/5.0;
+	float a = (float)sum / 5.0;
+	return a;
 }
-
 
 void Student::Print(ostream& out) {
 	out << this->Value.Name
