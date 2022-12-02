@@ -97,7 +97,9 @@ void Univer::Reduct(int group, int ch)
 	
 }
 void Univer::DelStudent(int group) {
+	Value[group].PrintStudents();
 	Value[group].Del();
+	
 }
 
 void Univer::Calculate(int group) {//средний балл группы

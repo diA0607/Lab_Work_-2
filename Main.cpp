@@ -194,7 +194,7 @@ int main() {
 				}
 				cout << un1;
 			}
-			else if (choose1 == 1)
+			else if (choose1 == 2)
 			{
 				if (un1.GetSize() >= 1) {
 					int group;

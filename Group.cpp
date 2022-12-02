@@ -51,17 +51,16 @@ void Group::Del() {
 	if (size == 0)
 		throw string("Unable to delete student. Group is empty");
 
-	int number; // номер студента
-
+	int number1; // номер студента
 	cout << "Введите номер студента для удаления: ";
-	cin >> number; // считываем номер
-
+	cin >> number1; // считываем номер
+	//cout << Value[number1];
 	// если номер не входит в нужный интервал, бросаем исключение
-	if (number < 1 || number > size)
+	if (number1 < 1 || number1 > size)
 		throw string("Номер студента должен быть от 1 до" + to_string(size));
 
 	// сдвигаем студентов
-	for (int i = number; i < size; i++) {
+	for (int i = number1; i < size; i++) {
 		Value[i - 1] = Value[i];
 	}
 	Student* temp = new Student[size];
